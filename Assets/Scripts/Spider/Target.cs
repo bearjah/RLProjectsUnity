@@ -7,11 +7,12 @@ public class Target : MonoBehaviour
 {
     public SpiderAgent spider;
     private float distanceToSpider;
-    private bool isRandomRespawn = false;
+    private bool isRandomRespawn = true;
 
     private void Awake()
     {
-        isRandomRespawn = false;
+        isRandomRespawn = true;
+        Respawn();
     }
     void OnTriggerEnter(Collider col)
     {

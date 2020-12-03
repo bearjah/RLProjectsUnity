@@ -25,6 +25,7 @@ public class PreyAgent : Agent
     private void FixedUpdate()
     {
         var survival = 1f;
+        // var distanceFromCenter = Mathf.Abs(transform.position.x) transform.position;
         if((Mathf.Abs(transform.position.x) > 4f + transform.parent.transform.position.x) || (Mathf.Abs(transform.position.z) > 4f + transform.parent.transform.position.z))
         {
             AddRewardWithScore(-1f * survival / MaxStep);
