@@ -460,7 +460,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1566179611161064419}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.07, y: 0.28, z: -0.57}
+  m_LocalPosition: {x: -2.91, y: 0.28, z: -0.57}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 1306998139756587468}
@@ -5670,34 +5670,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 7585951966778191076}
     m_Modifications:
     - target: {fileID: 1978415598968596130, guid: 7e75ccdc62d3caca683bf00a39e0dead, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.21
-      objectReference: {fileID: 0}
-    - target: {fileID: 1978415598968596130, guid: 7e75ccdc62d3caca683bf00a39e0dead, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.22
-      objectReference: {fileID: 0}
-    - target: {fileID: 1978415598968596130, guid: 7e75ccdc62d3caca683bf00a39e0dead, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 1978415598968596130, guid: 7e75ccdc62d3caca683bf00a39e0dead, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1978415598968596130, guid: 7e75ccdc62d3caca683bf00a39e0dead, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1978415598968596130, guid: 7e75ccdc62d3caca683bf00a39e0dead, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1978415598968596130, guid: 7e75ccdc62d3caca683bf00a39e0dead, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1978415598968596130, guid: 7e75ccdc62d3caca683bf00a39e0dead, type: 3}
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
@@ -5719,6 +5691,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1978415598968596156, guid: 7e75ccdc62d3caca683bf00a39e0dead, type: 3}
       propertyPath: agent
+      value: 
+      objectReference: {fileID: 8346280869629031532}
+    - target: {fileID: 1978415598968596156, guid: 7e75ccdc62d3caca683bf00a39e0dead, type: 3}
+      propertyPath: spider
       value: 
       objectReference: {fileID: 8346280869629031532}
     m_RemovedComponents: []
