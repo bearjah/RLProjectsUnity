@@ -156,10 +156,22 @@ public class PreyAgent : Agent
         transform.position = new Vector3(0f + transform.parent.transform.position.x, 1f, 0f + transform.parent.transform.position.z);
     }
 
-    private void OnCollisionEnter(Collision other)
+    // private void OnCollisionEnter(Collision other)
+    // {
+    //     // Touched target.
+    //     if (other.gameObject.CompareTag("spiderAgent") || other.gameObject.CompareTag("spiderLeg"))
+    //     {
+    //         AddRewardWithScore(-1f);
+    //         gameObject.SetActive(false);
+    //         spider.ReachedTarget();
+    //         EndEpisode();
+    //     }
+    // }
+
+    private void OnTriggerEnter(Collider other)
     {
         // Touched target.
-        if (other.gameObject.CompareTag("spiderAgent"))
+        if (other.gameObject.CompareTag("spiderAgent"))// || other.gameObject.CompareTag("spiderLeg"))
         {
             AddRewardWithScore(-1f);
             gameObject.SetActive(false);

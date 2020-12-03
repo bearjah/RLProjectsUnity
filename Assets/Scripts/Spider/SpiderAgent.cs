@@ -13,7 +13,7 @@ using TMPro;
 
 public class SpiderAgent : Agent
 {
-    public float score;
+    [HideInInspector] public float score;
     [HideInInspector] public Rigidbody rbAgent;
     public JointController[] Joints;
     public PreyAgent target;
@@ -34,10 +34,11 @@ public class SpiderAgent : Agent
         deltaUp  = (targetUp - this.transform.up.normalized).magnitude;
         // normalize to [0, 1]
         deltaUp /= 2f;
+
         float distanceToTarget = Vector3.Distance(target.transform.position, transform.position);
 
-        float distanceReward = 1f - Mathf.Pow(distanceToTarget/maxDistance, 2f/5f);
-        float keepUpReward = Mathf.Pow(1f - Mathf.Max(deltaUp, 0.1f), 1f/Mathf.Max(distanceToTarget, 0.1f));
+        float distanceReward = 1f - Mathf.Pow(2f * distanceToTarget/maxDistance, 2f/5f);
+        float keepUpReward = Mathf.Pow(1f - Mathf.Max(deltaUp, 0.05f), 1f/Mathf.Max(inputDirectionAverage, 0.4f));
         AddRewardWithScore(distanceReward * keepUpReward / MaxStep);
         float speedTowardPrey = Vector3.Project(rbAgent.velocity, targetDir.normalized).magnitude;
         float speedDirection = Vector3.Dot(rbAgent.velocity.normalized, targetDir.normalized);
@@ -78,20 +79,23 @@ public class SpiderAgent : Agent
 
     public void ReachedTarget()
     {
-        AddRewardWithScore(2f * (1f - Mathf.Pow(Mathf.Max(deltaUp, 0.1f), 2f/5f)));
+        AddRewardWithScore(5f);
         EndEpisode();
     }
     
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(transform.rotation);
-        sensor.AddObservation(rbAgent.velocity.normalized);
+        Quaternion bodyRotation = transform.rotation;
+        Vector3 bodyRotationNormalized = bodyRotation.eulerAngles / 180.0f - Vector3.one;
+        sensor.AddObservation(bodyRotationNormalized);
+        sensor.AddObservation(rbAgent.velocity);
 
-        float maxRaycastDist = 1f;
+        float maxRaycastDist = 2f;
         RaycastHit hit;
+        GameObject bodyTouchingPoint;
         Transform touchingPoint;
-
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, maxRaycastDist))
+        bodyTouchingPoint = transform.Find("BodyTouchPoint").gameObject;
+        if (Physics.Raycast(bodyTouchingPoint.transform.position, Vector3.down, out hit, maxRaycastDist))
         {
             sensor.AddObservation(hit.distance / maxRaycastDist);
         }
@@ -99,16 +103,17 @@ public class SpiderAgent : Agent
 
         foreach (var bodyPart in Joints)
         {
-            sensor.AddObservation(bodyPart.transform.rotation);
-            sensor.AddObservation(bodyPart.joint.targetRotation);
-            sensor.AddObservation(bodyPart.transform.position);
+            Quaternion LegRotation = bodyPart.transform.rotation;
+            Vector3 LegRotationNormalized = LegRotation.eulerAngles / 180.0f - Vector3.one;
+            sensor.AddObservation(LegRotationNormalized);
+            // sensor.AddObservation(bodyPart.joint.targetRotation);
+            // sensor.AddObservation(bodyPart.transform.position);
             if (bodyPart.bodyPartName == "Tibia")
             {
                 touchingPoint = bodyPart.gameObject.transform.GetChild(0);
                 if (Physics.Raycast(touchingPoint.transform.position, Vector3.down, out hit, maxRaycastDist))
                 {
                     sensor.AddObservation(hit.distance / maxRaycastDist);
-                    // Debug.Log(hit.distance / maxRaycastDist);
                 }
                 else sensor.AddObservation(1);   
             }
@@ -225,7 +230,7 @@ public class SpiderAgent : Agent
         float distanceToTarget;
         do
         {
-            randomPosition = new Vector3(Random.Range(-3.5f, 3.5f) + transform.parent.transform.position.x, 1f, Random.Range(-3.5f, 3.5f) + transform.parent.transform.position.z);
+            randomPosition = new Vector3(Random.Range(-3.3f, 3.3f) + transform.parent.transform.position.x, 1f, Random.Range(-3.3f, 3.3f) + transform.parent.transform.position.z);
             distanceToTarget = Vector3.Distance(randomPosition, target.transform.position);
         } while (distanceToTarget < 3f);
         transform.position = randomPosition;
