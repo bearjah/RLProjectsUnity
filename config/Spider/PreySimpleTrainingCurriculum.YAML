@@ -32,16 +32,7 @@ environment_parameters:
           behavior: RunAway
           signal_smoothing: true
           min_lesson_length: 100
-        value: 1.2
-  rotationSpeed:
-    curriculum:
-      - name: prey-intro
-        completion_criteria:
-          measure: progress
-          behavior: RunAway
-          signal_smoothing: true
-          min_lesson_length: 100
-        value: 100
+        value: 0.5
   randomRespawnTarget:
     curriculum:
       - name: Prey-DynamicRespawn

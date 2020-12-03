@@ -11,10 +11,11 @@ public class Target : MonoBehaviour
     void OnTriggerEnter(Collider col)
     {
         // Touched target.
-        if (col.gameObject.CompareTag("agent"))
+        if (col.gameObject.CompareTag("spiderAgent"))
         {
             gameObject.SetActive(false);
             agent.ReachedTarget();
+            Respawn();
         }
     }
     public void Respawn()
@@ -25,7 +26,7 @@ public class Target : MonoBehaviour
         {
             randomPosition = new Vector3(Random.Range(-4.5f, 4.5f) + transform.parent.transform.position.x, 1f, Random.Range(-4.5f, 4.5f) + transform.parent.transform.position.z);
             distanceToAgent = Vector3.Distance(randomPosition, agent.transform.position);
-        } while (distanceToAgent < 2f);
+        } while (distanceToAgent < 3f);
 
         transform.position = randomPosition;
     }

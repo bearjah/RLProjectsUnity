@@ -133,7 +133,7 @@ public class PreyAgent : Agent
     {
         this.score = 0f;
         Respawn();
-        this.MovementSpeed = EnvironmentParameters.GetWithDefault("movementSpeed", 1.0f);
+        this.MovementSpeed = EnvironmentParameters.GetWithDefault("movementSpeed", 0.0f);
         this.RotationSpeed = EnvironmentParameters.GetWithDefault("rotationSpeed", 100f);
         this.isRandomRespawn = EnvironmentParameters.GetWithDefault("randomRespawnTarget", 1f) == 1f ? true : false;
     }
@@ -146,14 +146,14 @@ public class PreyAgent : Agent
             Vector3 randomPosition;
             do
             {
-                randomPosition = new Vector3(Random.Range(-4.5f, 4.5f) + transform.parent.transform.position.x, 1f, Random.Range(-4.5f, 4.5f) + transform.parent.transform.position.z);
+                randomPosition = new Vector3(Random.Range(-4.5f, 4.5f), 1f, Random.Range(-4.5f, 4.5f)) + transform.parent.transform.position;
                 distanceToSpider = Vector3.Distance(randomPosition, spider.transform.position);
             } while (distanceToSpider < 3f);
 
             transform.position = randomPosition;
             return;
         }
-        transform.position = new Vector3(0f + transform.parent.transform.position.x, 1f, 0f + transform.parent.transform.position.z);
+        transform.position = new Vector3(0f, 1f, 0f) + transform.parent.transform.position;
     }
 
     // private void OnCollisionEnter(Collision other)
