@@ -135,7 +135,7 @@ public class PreyAgent : Agent
         Respawn();
         this.MovementSpeed = EnvironmentParameters.GetWithDefault("movementSpeed", 1.0f);
         this.RotationSpeed = EnvironmentParameters.GetWithDefault("rotationSpeed", 100f);
-        this.isRandomRespawn = EnvironmentParameters.GetWithDefault("randomRespawnTarget", 0f) == 1f ? true : false;
+        this.isRandomRespawn = EnvironmentParameters.GetWithDefault("randomRespawnTarget", 1f) == 1f ? true : false;
     }
 
     public void Respawn()
