@@ -19,13 +19,17 @@ public class PreyAgent : Agent
     public SpiderAgent spider;
     [HideInInspector] public float MovementSpeed;
     [HideInInspector] public float RotationSpeed;
+    private float maxDistance = Mathf.Sqrt(10 * 10 + 10 * 10);
     [HideInInspector] EnvironmentParameters EnvironmentParameters;
     public event Action OnEnvironmentReset;
 
     private void FixedUpdate()
     {
         var survival = 1f;
-        // var distanceFromCenter = Mathf.Abs(transform.position.x) transform.position;
+        // float distanceFromCenter = Mathf.Sqrt(Mathf.Pow(transform.position.x, 2f) + Mathf.Pow(transform.position.z, 2f)) - transform.parent.transform.position;
+        // var distanceFromCenterNormalized = distanceFromCenter/(maxDistance/2f);
+        // var distanceFromCenterReward = 1f - Mathf.Pow(distanceFromCenterNormalized, 2f/5f);
+        // AddRewardWithScore(distanceFromCenterReward/MaxStep);
         if((Mathf.Abs(transform.position.x) > 4f + transform.parent.transform.position.x) || (Mathf.Abs(transform.position.z) > 4f + transform.parent.transform.position.z))
         {
             AddRewardWithScore(-1f * survival / MaxStep);
@@ -134,7 +138,7 @@ public class PreyAgent : Agent
     {
         this.score = 0f;
         Respawn();
-        this.MovementSpeed = EnvironmentParameters.GetWithDefault("movementSpeed", 0.0f);
+        this.MovementSpeed = EnvironmentParameters.GetWithDefault("movementSpeed", 1.5f);
         this.RotationSpeed = EnvironmentParameters.GetWithDefault("rotationSpeed", 100f);
         this.isRandomRespawn = EnvironmentParameters.GetWithDefault("randomRespawnTarget", 1f) == 1f ? true : false;
     }
@@ -157,22 +161,10 @@ public class PreyAgent : Agent
         transform.position = new Vector3(0f, 1f, 0f) + transform.parent.transform.position;
     }
 
-    // private void OnCollisionEnter(Collision other)
-    // {
-    //     // Touched target.
-    //     if (other.gameObject.CompareTag("spiderAgent") || other.gameObject.CompareTag("spiderLeg"))
-    //     {
-    //         AddRewardWithScore(-1f);
-    //         gameObject.SetActive(false);
-    //         spider.ReachedTarget();
-    //         EndEpisode();
-    //     }
-    // }
-
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
         // Touched target.
-        if (other.gameObject.CompareTag("spiderAgent"))// || other.gameObject.CompareTag("spiderLeg"))
+        if (other.gameObject.CompareTag("spiderAgent") || other.gameObject.CompareTag("spiderLeg"))
         {
             AddRewardWithScore(-1f);
             gameObject.SetActive(false);
@@ -180,4 +172,16 @@ public class PreyAgent : Agent
             EndEpisode();
         }
     }
+
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     // Touched target.
+    //     if (other.gameObject.CompareTag("spiderAgent"))// || other.gameObject.CompareTag("spiderLeg"))
+    //     {
+    //         AddRewardWithScore(-1f);
+    //         gameObject.SetActive(false);
+    //         spider.ReachedTarget();
+    //         EndEpisode();
+    //     }
+    // }
 }

@@ -11,7 +11,6 @@ public class Target : MonoBehaviour
 
     private void Awake()
     {
-        isRandomRespawn = true;
         Respawn();
     }
     void OnTriggerEnter(Collider col)

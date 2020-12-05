@@ -20,7 +20,7 @@ behaviors:
         gamma: 0.99
         strength: 1.0
     keep_checkpoints: 5
-    max_steps: 3000000
+    max_steps: 5000000
     time_horizon: 64
     summary_freq: 50000
 environment_parameters:
@@ -32,13 +32,16 @@ environment_parameters:
           behavior: RunAway
           signal_smoothing: true
           min_lesson_length: 100
-        value: 0.5
+        value: 1.0
   randomRespawnTarget:
     curriculum:
-      - name: Prey-DynamicRespawn
+      - name: Prey-RespawnInCenter
         completion_criteria:
           measure: progress
           behavior: RunAway
           signal_smoothing: true
           min_lesson_length: 100
+          threshold: 0.2
+        value: 0.0
+      - name: Prey-RespawnInCenter
         value: 1.0

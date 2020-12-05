@@ -16,8 +16,8 @@ public class SpiderAgent : Agent
     [HideInInspector] public float score;
     [HideInInspector] public Rigidbody rbAgent;
     public JointController[] Joints;
-    // public PreyAgent target;
-    public Target target;
+    public PreyAgent target;
+    // public Target target;
     private float inputDirectionAverage = 0f;
     private float deltaUp;
     private float episodeTime;
@@ -38,7 +38,7 @@ public class SpiderAgent : Agent
 
         float distanceToTarget = Vector3.Distance(target.transform.position, transform.position);
 
-        float distanceReward = 1f - Mathf.Pow(distanceToTarget/maxDistance, 2f/5f);
+        float distanceReward = 1f - Mathf.Pow(1.5f * (distanceToTarget)/maxDistance, 2f/5f);
         float keepUpReward = Mathf.Pow(1f - Mathf.Max(deltaUp, 0.05f), 1f/Mathf.Max(inputDirectionAverage, 0.4f));
         AddRewardWithScore(distanceReward * keepUpReward / MaxStep);
         float speedTowardPrey = Vector3.Project(rbAgent.velocity, targetDir.normalized).magnitude;
