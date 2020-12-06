@@ -221,9 +221,9 @@ MonoBehaviour:
     VectorActionSize: 030000000300000003000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
-  m_Model: {fileID: 5022602860645237092, guid: 386514278aeea1523a55ea9acf3f4be3, type: 3}
-  m_InferenceDevice: 0
-  m_BehaviorType: 2
+  m_Model: {fileID: 0}
+  m_InferenceDevice: 1
+  m_BehaviorType: 0
   m_BehaviorName: RunAway
   TeamId: 1
   m_UseChildSensors: 1

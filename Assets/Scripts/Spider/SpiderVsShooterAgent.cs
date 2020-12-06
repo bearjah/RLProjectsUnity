@@ -11,17 +11,19 @@ using TMPro;
 
 [RequireComponent(typeof(Rigidbody))]
 
-public class SpiderAgent : Agent
+public class SpiderVsShooterAgent : Agent
 {
     [HideInInspector] public float score;
     [HideInInspector] public Rigidbody rbAgent;
     public JointController[] Joints;
-    public PreyAgent target;
+    public ShooterVsSpiderAgent target;
     // public Target target;
     private float inputDirectionAverage = 0f;
     private float deltaUp;
     private float episodeTime;
     private float maxDistance = Mathf.Sqrt(10 * 10 + 10 * 10);
+    [HideInInspector] public float Health;
+    [HideInInspector] public float initialHealth;
 
     [HideInInspector] EnvironmentParameters EnvironmentParameters;
     public event Action OnEnvironmentReset;
@@ -220,6 +222,8 @@ public class SpiderAgent : Agent
 
     void EnvironmentReset()
     {
+        this.initialHealth = EnvironmentParameters.GetWithDefault("initialHealth", 100f);
+        Health = initialHealth;
         this.score = 0f;
         Respawn();
         episodeTime = 0f;
@@ -237,5 +241,28 @@ public class SpiderAgent : Agent
         transform.position = randomPosition;
         transform.rotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
         this.gameObject.SetActive(true);
+    }
+
+    public void GetShot(float damage)
+    {
+        Debug.Log("SpiderGotShot");
+        ApplyDamage(damage);
+    }
+    
+    private void ApplyDamage(float damage)
+    {
+        this.Health -= damage;
+        if (this.Health <= 0)
+        {
+            Die();
+        }
+    }
+    
+    private void Die()
+    {
+        AddRewardWithScore(-4f);
+        gameObject.SetActive(false);
+        EndEpisode();
+        target.ConfirmedKill();
     }
 }
