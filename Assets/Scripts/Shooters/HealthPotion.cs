@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class HealthPotion : MonoBehaviour
 {
+    public int numForSpawn = 1;
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = new Vector3(Random.Range(-4f, 4f), 0.6f, Random.Range(-4f, 4f)) + transform.parent.transform.position;
+        if(numForSpawn == 1)
+        {
+            transform.position = new Vector3(Random.Range(-2f, -1f), 0.6f, Random.Range(-4f, 4f)) + transform.parent.transform.position;
+        }
+        if(numForSpawn == 2)
+        {
+            transform.position = new Vector3(Random.Range(1f, 2f), 0.6f, Random.Range(-4f, 4f)) + transform.parent.transform.position;
+        }
     }
 
     // Update is called once per frame
@@ -23,7 +31,7 @@ public class HealthPotion : MonoBehaviour
         {
             if (coll.gameObject.TryGetComponent(out ShooterAgent target))
             {
-                // target.IncrReward(2.0f);
+                // target.IncrReward(1.0f);
                 if(target.Health < target.initialHealth)
                 {
                     target.Health += 10f;
@@ -31,6 +39,13 @@ public class HealthPotion : MonoBehaviour
                     {
                         target.Health = target.initialHealth;
                     }
+                }
+                if(numForSpawn == 1)
+                {
+                    transform.position = new Vector3(Random.Range(-2f, -1f), 0.6f, Random.Range(-4f, 4f)) + transform.parent.transform.position;
+                }
+                if(numForSpawn == 2)
+                {
                     transform.position = new Vector3(Random.Range(1f, 2f), 0.6f, Random.Range(-4f, 4f)) + transform.parent.transform.position;
                 }
             }

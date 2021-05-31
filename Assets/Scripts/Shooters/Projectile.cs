@@ -15,7 +15,7 @@ public class Projectile : MonoBehaviour
     {
         // float range = (shotPosition - targetPosition).sqrMagnitude; 
         // shooter.IncrReward(isHit ? Mathf.Min(range, shooter.MaxRangeReward) : shooter.MissPenalty);
-        shooter.IncrReward(isHit ? 1f : -0.2f);
+        shooter.IncrReward(isHit ? 1f : -0.005f);
         Destroy(this.gameObject);
     }
 

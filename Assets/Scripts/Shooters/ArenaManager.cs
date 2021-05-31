@@ -33,27 +33,41 @@ public class ArenaManager : MonoBehaviour
 
     public void RegisterDeath(int team)
     {
-        if (DeadAgentsCount(team) <= minDeadCount)
-        {
-            foreach (var agent in agents)
-            {
-                agent.EndEpisodeDueKill();  //all agents need to be reset
-            }
-        }
-    }
-
-    public void ApplyTeamRewardAndPenalty(int team)
-    {
         foreach (var agent in agents)
         {
             if (agent.Team != team)
             {
-                agent.IncrReward(100f);
+                agent.IncrReward(500f);
             }
             else
             {
                 agent.IncrReward(-100f);
             }
+            // agent.gameObject.SetActive(false);
+            // agent.EndEpisode();  //all agents need to be reset
+            agent.EndEpisodeDueKill();
         }
+        // if (DeadAgentsCount(team) <= minDeadCount)
+        // {
+        //     foreach (var agent in agents)
+        //     {
+        //         agent.EndEpisode();  //all agents need to be reset
+        //     }
+        // }
     }
+
+    // public void ApplyTeamRewardAndPenalty(int team)
+    // {
+    //     foreach (var agent in agents)
+    //     {
+    //         if (agent.Team != team)
+    //         {
+    //             agent.IncrReward(100f);
+    //         }
+    //         else
+    //         {
+    //             agent.IncrReward(-100f);
+    //         }
+    //     }
+    // }
 }

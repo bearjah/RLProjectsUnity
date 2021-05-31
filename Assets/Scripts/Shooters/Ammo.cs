@@ -4,9 +4,19 @@ using UnityEngine;
 
 public class Ammo : MonoBehaviour
 {
+    // private int max_ammo = 30;
+    public int numForSpawn = 1;
+
     void Start()
     {
-        transform.position = new Vector3(Random.Range(-4f, 4f), 0.6f, Random.Range(-4f, 4f)) + transform.parent.transform.position;
+        if(numForSpawn == 1)
+        {
+            transform.position = new Vector3(Random.Range(-2f, -1f), 0.6f, Random.Range(-4f, 4f)) + transform.parent.transform.position;
+        }
+        if(numForSpawn == 2)
+        {
+            transform.position = new Vector3(Random.Range(1f, 2f), 0.6f, Random.Range(-4f, 4f)) + transform.parent.transform.position;
+        }
     }
 
     // Update is called once per frame
@@ -22,15 +32,22 @@ public class Ammo : MonoBehaviour
         {
             if (coll.gameObject.TryGetComponent(out ShooterAgent target))
             {
-                // target.IncrReward(2.0f);
+                // target.IncrReward(1.0f);
                 if(target.Ammo < target.initialAmmo)
                 {
-                    target.Ammo += 50;
+                    target.Ammo += 25;
                     if(target.Ammo > target.initialAmmo)
                     {
                         target.Ammo = target.initialAmmo;
                     }
+                }
+                if(numForSpawn == 1)
+                {
                     transform.position = new Vector3(Random.Range(-2f, -1f), 0.6f, Random.Range(-4f, 4f)) + transform.parent.transform.position;
+                }
+                if(numForSpawn == 2)
+                {
+                    transform.position = new Vector3(Random.Range(1f, 2f), 0.6f, Random.Range(-4f, 4f)) + transform.parent.transform.position;
                 }
             }
         }

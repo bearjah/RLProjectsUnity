@@ -31,10 +31,11 @@ public class ShooterAgent : Agent
     public Transform shootingPoint;
     [HideInInspector] public Rigidbody rbAgent;
     [HideInInspector] EnvironmentParameters EnvironmentParameters;
-    public event Action OnEnvironmentReset;
+    // public event Action OnEnvironmentReset;
 
     private void FixedUpdate()
     {
+        // IncrReward(-1f/MaxStep);
         episodeTime++;
         if(Team == 0)
         {
@@ -71,7 +72,7 @@ public class ShooterAgent : Agent
     private void ApplyDamage(float damage)
     {
         this.Health -= damage;
-        if (this.Health <= 0)
+        if (this.Health <= 0f)
         {
             Die();
         }
@@ -79,9 +80,10 @@ public class ShooterAgent : Agent
     
     private void Die()
     {
-        arenaManager.ApplyTeamRewardAndPenalty(Team);
-        gameObject.SetActive(false);
+        // arenaManager.ApplyTeamRewardAndPenalty(Team);
+        // gameObject.SetActive(false);
         arenaManager.RegisterDeath(Team);
+        // EndEpisode();
     }
 
     public void MoveAgent(int forwardMovement, int rightMovement, int rotation)
@@ -180,7 +182,7 @@ public class ShooterAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-        OnEnvironmentReset?.Invoke();
+        // OnEnvironmentReset?.Invoke();
         EnvironmentReset();
         Respawn();
     }
@@ -196,10 +198,10 @@ public class ShooterAgent : Agent
         this.score = 0f;
         this.episodeTime = 0;
         this.initialHealth = EnvironmentParameters.GetWithDefault("initialHealth", 100f);
-        this.initialAmmo = EnvironmentParameters.GetWithDefault("initialAmmo", 200f);        
+        this.initialAmmo = EnvironmentParameters.GetWithDefault("initialAmmo", 25f);        
         this.Health = initialHealth;
         this.Ammo = initialAmmo;
-        this.Damage = EnvironmentParameters.GetWithDefault("shootDamage", 4f);
+        this.Damage = EnvironmentParameters.GetWithDefault("shootDamage", 2f);
         this.MovementSpeed = EnvironmentParameters.GetWithDefault("movementSpeed", 3f);
         this.RotationSpeed = EnvironmentParameters.GetWithDefault("rotationSpeed", 130f);
     }
@@ -211,7 +213,7 @@ public class ShooterAgent : Agent
 
     public void Respawn()
     {
-        this.gameObject.SetActive(true);
+        // this.gameObject.SetActive(true);
         if (this.Team == 0)
         {
             transform.position = new Vector3(Random.Range(-4f, -2f), 0.5f, Random.Range(-4f, 4f)) + transform.parent.transform.position;    

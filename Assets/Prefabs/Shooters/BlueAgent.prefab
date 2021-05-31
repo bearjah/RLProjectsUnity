@@ -326,7 +326,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 5000
+  MaxStep: 2500
   score: 0
   Health: 0
   Ammo: 0
@@ -403,7 +403,7 @@ MonoBehaviour:
   - redProjectile
   m_RaysPerDirection: 50
   m_MaxRayDegrees: 120
-  m_SphereCastRadius: 0.01
+  m_SphereCastRadius: 0
   m_RayLength: 20
   m_RayLayerMask:
     serializedVersion: 2
